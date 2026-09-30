@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>STEM Racing Team</title>
+  <meta name="description" content="Our STEM Racing (F1 in Schools) car, team and sponsorship drive.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="scene" aria-label="3D model of our car"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="#" id="brand"></a>
+    <a class="topbar__cta" href="sponsor.html">Sponsor us</a>
+    <div class="countdown" id="countdown" hidden></div>
+    <div class="progress"><div class="progress__bar" id="progress"></div></div>
+  </header>
+
+  <nav class="stop-nav" id="stop-nav" aria-label="Sections"></nav>
+
+  <svg class="leader" id="leader" aria-hidden="true"><polyline points="" /></svg>
+  <div class="hotspot" id="hotspot" aria-hidden="true"><span></span></div>
+
+  <main id="popups"></main>
+
+  <div id="scroll-space"></div>
+
+  <div class="loader" id="loader">
+    <div class="loader__inner">
+      <div class="loader__title" id="loader-title">Loading</div>
+      <div class="loader__track"><div class="loader__fill" id="loader-fill"></div></div>
+      <div class="loader__pct" id="loader-pct">0%</div>
+    </div>
+  </div>
+
+  <script>
+    // ES modules can't load from a double-clicked file. Explain instead of showing a blank page.
+    if (location.protocol === 'file:') {
+      document.getElementById('loader-title').textContent = 'Open this site through a local server';
+      document.getElementById('loader-pct').innerHTML =
+        'Double-clicking index.html won’t work. In this folder run <code>py serve.py</code>, then open http://localhost:8080';
+    }
+  </script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

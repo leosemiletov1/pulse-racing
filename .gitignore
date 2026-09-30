@@ -1,0 +1,6 @@
+# Kept on this computer only (never uploaded to GitHub)
+.claude/
+colour-previews/
+tools/onshape_api_calls.log
+__pycache__/
+*.pyc

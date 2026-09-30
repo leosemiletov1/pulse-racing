@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sponsor PULSE Racing</title>
+  <meta name="description" content="Sponsor PULSE Racing, a STEM Racing team from King's College School Wimbledon.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page">
+  <header class="topbar topbar--page">
+    <a class="brand" href="index.html" id="brand">PULSE Racing</a>
+    <a class="topbar__cta topbar__cta--ghost" href="index.html">&larr; Back to the car</a>
+  </header>
+
+  <main class="page__main">
+    <div class="popup__kicker">Sponsorship</div>
+    <h1 class="page__title">Sponsor PULSE Racing</h1>
+    <p class="page__lead">[Placeholder: introduce the sponsorship opportunity here.]</p>
+    <p class="popup__text">[Placeholder: packages, benefits, how to get in touch.]</p>
+  </main>
+
+  <script type="module">
+    // Keep the team name and accent colour in sync with config/tour.js
+    import TOUR from './config/tour.js';
+    document.documentElement.style.setProperty('--accent', TOUR.brand.accent);
+    document.getElementById('brand').textContent = TOUR.brand.teamName;
+    document.title = `Sponsor ${TOUR.brand.teamName}`;
+  </script>
+</body>
+</html>

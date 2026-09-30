@@ -77,7 +77,14 @@ export a different Part Studio, or `--quality medium` for a smaller file.
 Coordinates in the config match Onshape (mm, nose at −Y, Z up), so pins stay put
 as long as the part isn't moved.
 
-## Publish it
+## The live website
+
+Live at **https://leosemiletov1.github.io/pulse-racing/** (GitHub repo: https://github.com/leosemiletov1/pulse-racing).
+
+To publish changes: double-click `tools\publish.bat` (or run `git add -A`, `git commit -m "..."`, `git push`).
+The live site updates about a minute later. `colour-previews/`, `.claude/` and the Onshape API log are never uploaded (see `.gitignore`).
+
+## Publish it elsewhere
 
 It's a static site: upload the whole folder (without `tools/` and `serve.py`) to
 GitHub Pages, Netlify or your school's web host. No build step.

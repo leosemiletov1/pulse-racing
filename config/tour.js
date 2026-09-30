@@ -325,7 +325,7 @@ export default {
             ],
           },
           {
-            name: 'Platinum Sponsor', price: '£300+',
+            name: 'Platinum Sponsor', price: '£250+',
             perks: [
               'Premium large car logo placement',
               'Premium large pit display logo',
@@ -336,7 +336,7 @@ export default {
             ],
           },
           {
-            name: 'Gold Sponsor', price: '£150+',
+            name: 'Gold Sponsor', price: '£100+',
             perks: [
               'Medium car logo placement',
               'Medium pit display logo',
@@ -347,7 +347,7 @@ export default {
             ],
           },
           {
-            name: 'Silver Sponsor', price: '£80+',
+            name: 'Silver Sponsor', price: '£50+',
             perks: [
               'Small car logo placement',
               'Medium pit display logo',
@@ -357,7 +357,7 @@ export default {
             ],
           },
           {
-            name: 'Bronze Sponsor', price: '£40+',
+            name: 'Bronze Sponsor', price: '£25+',
             perks: [
               'Small pit display logo',
               'Small Enterprise Portfolio placement',

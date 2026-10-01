@@ -365,6 +365,19 @@ function loadExtra(x) {
   }, undefined, (err) => console.error(`Couldn't load ${x.file}`, err));
 }
 
+// Loading bar. The real file size comes from assets/<model>.info.json (written by the export tool).
+let modelBytes = 0;
+fetch(RENDER.model.file.replace(/\.glb$/i, '.info.json'))
+  .then((r) => (r.ok ? r.json() : null))
+  .then((info) => { modelBytes = info?.bytes || 0; })
+  .catch(() => {});
+let shownPct = 0;
+function setLoadProgress(pct) {
+  shownPct = Math.max(shownPct, pct); // never jump backwards
+  $('loader-fill').style.width = `${shownPct}%`;
+  $('loader-pct').textContent = `${shownPct}%`;
+}
+
 loader.load(
   RENDER.model.file,
   (gltf) => {
@@ -385,14 +398,17 @@ loader.load(
     app.model = model;
     app.bounds = box;
     renderer.compile(scene, camera);
+    setLoadProgress(100);
     requestAnimationFrame(() => $('loader').classList.add('is-done'));
     document.documentElement.classList.add('model-ready');
   },
   (e) => {
-    if (!e.total) return;
-    const pct = Math.round((e.loaded / e.total) * 100);
-    $('loader-fill').style.width = `${pct}%`;
-    $('loader-pct').textContent = `${pct}%`;
+    // Web hosts usually send the model compressed, so e.total (the compressed size) is smaller
+    // than the bytes we receive. Use the real size from <model>.info.json when we have it,
+    // and never show more than 99% until the model is actually ready.
+    const total = modelBytes || e.total;
+    if (!total) return;
+    setLoadProgress(Math.min(99, Math.floor((e.loaded / total) * 100)));
   },
   (err) => {
     console.error(err);

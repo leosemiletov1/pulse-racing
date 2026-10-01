@@ -199,6 +199,11 @@ def main():
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_bytes(to_glb(gltf))
+    # The website's loading bar reads the true file size from here (hosts send the file compressed).
+    info = {"bytes": out.stat().st_size, "triangles": tris, "parts": parts,
+            "exported": datetime.datetime.now().isoformat(timespec="seconds"),
+            "source": None if args.from_file else args.url}
+    out.with_name(out.stem + ".info.json").write_text(json.dumps(info, indent=1))
     print(f"Saved {out} ({out.stat().st_size / 1e6:.1f} MB, {tris:,} triangles)")
     print("Parts:", ", ".join(parts))
 

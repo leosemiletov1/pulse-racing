@@ -34,7 +34,10 @@
      members: [{ name, role, photo, bio }]
      tiers: [{ name, price, perks: [...], highlight }]
      cta: { label, href }
-     photos: [{ src: 'assets/photos/wing.jpg', caption: '...' }]
+     tags: { title, items: [...] }                       a row of word chips
+     swatches: { title, items: [{ color, label }], note } colour scheme
+     gallery: { title, items: [{ src, label, highlight }] } e.g. logo evolution
+     photos: [{ src: 'assets/photos/wing.jpg', caption: '...' }]   add fit: 'contain' to show a photo uncropped (on white)
              Photos pop up around the card. Leave out `src` for a grey placeholder.
              Put image files in assets/photos/. Landscape ~3:2 images look best.
    ========================================================================== */
@@ -110,6 +113,51 @@ export default {
         photos: [
           { caption: 'Team photo' },
           { caption: 'In the workshop' },
+        ],
+      },
+    },
+
+    // ------------------------------------------------ BRANDING & IDENTITY
+    {
+      id: 'branding',
+      label: 'Branding',
+      camera: { target: [0, 20, -6], azimuth: -10, elevation: 10, distance: 600, fov: 28 },
+      carOnScreen: [-0.31, 0],
+      drift: 12,
+      hold: 1.5,
+      popup: {
+        side: 'right',
+        wide: true,
+        kicker: 'Part 1 · Brand & identity',
+        title: 'Branding & team identity',
+        text: [
+          'We chose the name <strong>PULSE</strong> because it captures the passion and adrenaline we feel for this competition, and the speed, consistency and accuracy we want to show on and off the stage.',
+          'Our logo started as a simple blue heartbeat pulse. When we moved to black and white, we refined it into a sleek line that blends an electric pulse with the silhouette of a car, with our name in bold beneath.',
+        ],
+        tags: { title: 'Our name stands for', items: ['Passion', 'Speed', 'Consistency', 'Accuracy'] },
+        swatches: {
+          title: 'Our colour scheme',
+          items: [
+            { color: '#000000', label: 'Black' },
+            { color: '#ffffff', label: 'White' },
+            { color: '#39ff88', label: 'PULSE green' },
+          ],
+          note: 'Simple · Professional · Elegant',
+        },
+        gallery: {
+          title: 'Logo design iterations',
+          items: [
+            { src: 'assets/branding/logo-1-heartbeat.png', label: 'Heartbeat pulse' },
+            { src: 'assets/branding/logo-2-engineered-for-speed.jpg', label: 'Engineered for speed' },
+            { src: 'assets/branding/logo-3-pulse-emblem.jpg', label: 'Pulse emblem' },
+            { src: 'assets/branding/logo-4-car-silhouette.jpg', label: 'Car silhouette' },
+            { src: 'assets/branding/logo-5-final.png', label: 'Final: pulse + car', highlight: true },
+            { src: 'assets/branding/logo-final-green.png', label: 'Final in PULSE green', highlight: true },
+          ],
+        },
+        photos: [
+          { src: 'assets/branding/uniform-front.jpg', caption: 'Our uniform', fit: 'contain' },
+          { src: 'assets/branding/uniform-sleeve.jpg', caption: 'Sponsor on the sleeve', fit: 'contain' },
         ],
       },
     },

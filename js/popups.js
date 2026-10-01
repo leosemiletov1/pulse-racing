@@ -72,6 +72,52 @@ export function buildPopup(stop) {
   if (p.quote) card.append(h('blockquote', 'popup__quote', p.quote));
   for (const para of [].concat(p.text || [])) card.append(h('p', 'popup__text', para));
 
+  // tags: { title, items: ['Passion', ...] }  -> a labelled row of word chips
+  if (p.tags?.items?.length) {
+    const block = h('div', 'popup__block');
+    if (p.tags.title) block.append(h('div', 'popup__block-title', p.tags.title));
+    const row = h('div', 'tags');
+    p.tags.items.forEach((t) => row.append(h('span', 'tag', t)));
+    block.append(row);
+    card.append(block);
+  }
+
+  // swatches: { title, items: [{ color, label }], note }  -> colour scheme
+  if (p.swatches?.items?.length) {
+    const block = h('div', 'popup__block');
+    if (p.swatches.title) block.append(h('div', 'popup__block-title', p.swatches.title));
+    const row = h('div', 'swatches');
+    p.swatches.items.forEach((s) => {
+      const sw = h('div', 'swatch');
+      const chip = h('span', 'swatch__chip');
+      chip.style.background = s.color;
+      sw.append(chip, h('span', 'swatch__label', s.label));
+      row.append(sw);
+    });
+    if (p.swatches.note) row.append(h('span', 'swatches__note', p.swatches.note));
+    block.append(row);
+    card.append(block);
+  }
+
+  // gallery: { title, items: [{ src, label, highlight }] }  -> e.g. logo evolution
+  if (p.gallery?.items?.length) {
+    const block = h('div', 'popup__block');
+    if (p.gallery.title) block.append(h('div', 'popup__block-title', p.gallery.title));
+    const grid = h('div', 'gallery');
+    p.gallery.items.forEach((g, i) => {
+      const fig = h('figure', `gallery__item${g.highlight ? ' gallery__item--highlight' : ''}`);
+      const frame = h('div', 'gallery__frame');
+      const img = new Image();
+      img.src = g.src;
+      img.alt = g.label || '';
+      frame.append(img);
+      fig.append(frame, h('figcaption', null, `<b>${i + 1}</b> ${g.label || ''}`));
+      grid.append(fig);
+    });
+    block.append(grid);
+    card.append(block);
+  }
+
   if (p.bullets?.length) {
     const ul = h('ul', 'popup__bullets');
     p.bullets.forEach((b) => ul.append(h('li', null, b)));
@@ -109,7 +155,6 @@ export function buildPopup(stop) {
         const img = new Image();
         img.src = m.photo;
         img.alt = m.name;
-        img.loading = 'lazy';
         av.append(img);
       } else {
         av.textContent = initials(m.name);
@@ -152,7 +197,10 @@ export function buildPopup(stop) {
       const img = new Image();
       img.src = ph.src;
       img.alt = ph.caption || '';
-      img.loading = 'lazy';
+      if (ph.fit === 'contain') { // show the whole image instead of cropping it
+        img.style.objectFit = 'contain';
+        fig.style.background = ph.background || '#fff';
+      }
       fig.append(img);
     } else {
       fig.classList.add('photo--empty');

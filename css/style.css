@@ -345,3 +345,12 @@ html { scroll-behavior: smooth; }
 .popup--wide .member__role { font-size: 12px; }
 .popup--wide .popup__text { margin-bottom: 10px; }
 @media (max-aspect-ratio: 9/10) { .popup--wide .members { grid-template-columns: 1fr 1fr; } }
+
+/* highlighted perk line in the sponsor page choice cards */
+.choice p:not(:last-of-type) { flex: none; }
+.choice .choice__perk { position: relative; padding-left: 26px; color: var(--text); font-weight: 600; }
+.choice__perk::before {
+  content: '\2713'; position: absolute; left: 0; top: 1px; width: 18px; height: 18px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 11px; font-weight: 900;
+  background: var(--accent); color: var(--accent-ink);
+}

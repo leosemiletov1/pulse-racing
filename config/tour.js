@@ -25,8 +25,10 @@
                 Phones always put the car above the popup.
 
    popup fields (all optional; use whichever you need):
-     side: 'left' | 'right'     style: 'hero' (big title, no card)
+     side: 'left' | 'right'     style: 'hero' (big title, no card)     wide: true (wider card)
      kicker, title, text (string or list of paragraphs; simple HTML allowed)
+     quote: 'a highlighted line, e.g. the mission'
+     banner: { kicker, title, text }  a coloured strip above the card that starts a new part of the tour
      bullets: ['...']           stats: [{ value, label }]
      table: { columns: [...], rows: [[...], ...] }
      members: [{ name, role, photo, bio }]
@@ -74,7 +76,41 @@ export default {
         style: 'hero',
         kicker: 'STEM Racing · London Regional Finals · 21 January 2027',
         title: 'PULSE Racing',
-        text: 'Dominating the track with precision engineering, relentless innovation and unstoppable team spirit.',
+        text: 'Students designing, building and racing our own car. Scroll to meet the team, then take the car apart.',
+      },
+    },
+
+    // -------------------------------------------------------- WHO WE ARE
+    {
+      id: 'who-we-are',
+      label: 'Who we are',
+      camera: { target: [0, 26, -4], azimuth: 20, elevation: 60, distance: 700, fov: 28 },
+      carOnScreen: [-0.31, 0],
+      drift: 14,
+      hold: 1.6,
+      popup: {
+        side: 'right',
+        wide: true,
+        kicker: 'Part 1 · Who we are',
+        title: 'Meet PULSE Racing',
+        quote: 'To dominate the track with precision engineering, relentless innovation and unstoppable team spirit.',
+        text: [
+          '<strong>STEM Racing</strong> (formerly F1 in Schools) is a global competition where student teams design, analyse, manufacture and race a miniature Formula 1 car, launched by a CO₂ canister down a 20-metre track. Teams are also judged on their engineering and enterprise portfolios, pit display and presentation to the judges.',
+          'We’re six students from King’s College School Wimbledon. Everyone has a lead role, and our fluid-roles system lets anyone jump in wherever the workload peaks.',
+        ],
+        members: [
+          // photo: 'assets/team/coen.jpg'  (optional; initials are shown if left out)
+          { name: 'Coen Zhang', role: 'Team Principal' },
+          { name: 'Marco Neri', role: 'Marketing & Branding Lead, Deputy Principal' },
+          { name: 'Leonid Semiletov', role: 'CTO · Car Design & Engineering' },
+          { name: 'Alastair Lightbody', role: 'Sponsorship Lead' },
+          { name: 'Jamie Powles', role: 'Finance Director' },
+          { name: 'Benjamin Robare', role: 'PR & Communications Lead' },
+        ],
+        photos: [
+          { caption: 'Team photo' },
+          { caption: 'In the workshop' },
+        ],
       },
     },
 
@@ -87,6 +123,11 @@ export default {
       drift: 8,
       popup: {
         side: 'left',
+        banner: {
+          kicker: 'Part 2',
+          title: 'The car',
+          text: 'The next stops take you through how we designed it, from nose to tail.',
+        },
         kicker: 'Design · 01',
         title: 'Unibody front wing',
         text: 'Our first car had a poorly shaped front slope and wing with harsh edges that caused airflow separation. Iteration 2 introduced a single unibody front wing; iteration 3 put it through our CFD loop and cut the drag coefficient by <strong>22%</strong>. It has stayed unchanged since.',
@@ -197,35 +238,6 @@ export default {
         photos: [
           { caption: 'Wake visualisation' },
           { caption: 'Rear view' },
-        ],
-      },
-    },
-
-    // --------------------------------------------------------------- TEAM
-    {
-      id: 'team',
-      label: 'Team',
-      camera: { target: [0, 30, -4], azimuth: 160, elevation: 60, distance: 600, fov: 28 },
-      carOnScreen: [-0.25, 0],
-      drift: 14,
-      hold: 1.4,
-      popup: {
-        side: 'right',
-        kicker: 'The crew',
-        title: 'Meet the team',
-        text: 'Six students from King’s College School Wimbledon. Everyone has a lead role, and our fluid-roles system lets anyone jump in wherever the workload peaks.',
-        members: [
-          // photo: 'assets/team/coen.jpg'  (optional; initials are shown if left out)
-          { name: 'Coen Zhang', role: 'Team Principal' },
-          { name: 'Marco Neri', role: 'Marketing & Branding Lead, Deputy Principal' },
-          { name: 'Leonid Semiletov', role: 'CTO · Car Design & Engineering' },
-          { name: 'Alastair Lightbody', role: 'Sponsorship Lead' },
-          { name: 'Jamie Powles', role: 'Finance Director' },
-          { name: 'Benjamin Robare', role: 'PR & Communications Lead' },
-        ],
-        photos: [
-          { caption: 'Team photo' },
-          { caption: 'In the workshop' },
         ],
       },
     },

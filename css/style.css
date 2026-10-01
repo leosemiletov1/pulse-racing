@@ -315,3 +315,33 @@ html { scroll-behavior: smooth; }
 .page__footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 64px !important; padding-bottom: 48px; color: var(--muted); font-size: 14px; }
 .page__footer a { color: var(--text); text-decoration: none; }
 .page__footer a:hover { color: var(--accent); }
+
+/* ---------- popup extras: mission quote and section banner */
+.popup__quote {
+  margin: 0 0 14px; padding: 2px 0 2px 14px; border-left: 2px solid var(--accent);
+  font-size: 17px; line-height: 1.45; font-style: italic; color: var(--text);
+}
+.popup__banner {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 10px;
+  padding: 14px 20px; border-radius: 14px; background: var(--accent); color: var(--accent-ink);
+  transform: translateY(18px); transition: transform .45s;
+}
+.popup.is-active .popup__banner { transform: none; }
+.popup__banner-kicker { font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; opacity: .75; }
+.popup__banner-title { font-size: 26px; font-weight: 900; line-height: 1; text-transform: uppercase; letter-spacing: .02em; }
+.popup__banner-text { flex-basis: 100%; margin: 4px 0 0; font-size: 14px; line-height: 1.4; font-weight: 600; }
+@media (max-aspect-ratio: 9/10) {
+  .popup__banner { padding: 10px 16px; margin-bottom: 8px; }
+  .popup__banner-title { font-size: 20px; }
+  .popup__banner-text { font-size: 13px; }
+}
+
+/* wide: true on a popup (e.g. "Who we are") */
+.popup--wide { --card-w: min(620px, calc(100vw - 32px)); }
+.popup--wide .members { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.popup--wide .member { padding: 8px; gap: 8px; }
+.popup--wide .member__avatar { width: 34px; height: 34px; font-size: 13px; }
+.popup--wide .member__name { font-size: 14px; }
+.popup--wide .member__role { font-size: 12px; }
+.popup--wide .popup__text { margin-bottom: 10px; }
+@media (max-aspect-ratio: 9/10) { .popup--wide .members { grid-template-columns: 1fr 1fr; } }

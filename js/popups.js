@@ -62,13 +62,14 @@ export function renderTiers(tiers, { allOpen = false } = {}) {
 export function buildPopup(stop) {
   const p = stop.popup;
   const hero = p.style === 'hero';
-  const wrap = h('section', `popup popup--${hero ? 'hero' : p.side || 'left'}`);
+  const wrap = h('section', `popup popup--${hero ? 'hero' : p.side || 'left'}${p.wide ? ' popup--wide' : ''}`);
   wrap.id = `popup-${stop.id}`;
   wrap.setAttribute('aria-label', p.title || stop.label || stop.id);
   const card = wrap.appendChild(h('div', 'popup__card'));
 
   if (p.kicker) card.append(h('div', 'popup__kicker', p.kicker));
   if (p.title) card.append(h(hero ? 'h1' : 'h2', 'popup__title', p.title));
+  if (p.quote) card.append(h('blockquote', 'popup__quote', p.quote));
   for (const para of [].concat(p.text || [])) card.append(h('p', 'popup__text', para));
 
   if (p.bullets?.length) {
@@ -132,6 +133,15 @@ export function buildPopup(stop) {
   }
 
   if (hero) card.append(h('div', 'scroll-hint', '<i></i>Scroll to explore'));
+
+  // Section banner above the card, e.g. "Part 2 · The car"
+  if (p.banner) {
+    const b = h('div', 'popup__banner');
+    if (p.banner.kicker) b.append(h('span', 'popup__banner-kicker', p.banner.kicker));
+    if (p.banner.title) b.append(h('span', 'popup__banner-title', p.banner.title));
+    if (p.banner.text) b.append(h('p', 'popup__banner-text', p.banner.text));
+    wrap.insertBefore(b, card);
+  }
 
   // Photos that pop up around the card. No `src` = a placeholder frame.
   (p.photos || []).forEach((ph, i) => {

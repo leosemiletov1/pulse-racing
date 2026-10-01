@@ -54,8 +54,9 @@ export default {
   },
 
   defaults: {
-    hold: 1.0,                // screen-heights of scrolling spent at each stop
-    move: 1.2,                // screen-heights of scrolling to fly between stops
+    scrollScale: 0.5,         // overall tour length: 1 = original, 0.5 = half the scrolling. Smaller = faster.
+    hold: 1.0,                // screen-heights of scrolling spent at each stop (before scrollScale)
+    move: 1.2,                // screen-heights of scrolling to fly between stops (before scrollScale)
     easing: 'inOutCubic',     // 'linear' | 'inOutSine' | 'inOutCubic' | 'inOutQuint'
     smoothing: 0.35,          // seconds; how softly the camera catches up with the scrollbar
     mobileZoomOut: 0.75,      // pulls the camera back on tall/narrow phone screens (0 = off)

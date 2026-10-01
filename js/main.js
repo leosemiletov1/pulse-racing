@@ -95,7 +95,10 @@ for (const base of RENDER.lights) {
 
 // ------------------------------------------------------------------ timeline
 // Each stop owns [start, end] (the hold), followed by `move` screens of travel.
-const stops = TOUR.stops.map((s) => ({ ...s, hold: s.hold ?? D.hold, move: s.move ?? D.move, drift: s.drift ?? 0 }));
+const SCROLL = D.scrollScale ?? 1; // shrinks/stretches the whole tour
+const stops = TOUR.stops.map((s) => ({
+  ...s, hold: (s.hold ?? D.hold) * SCROLL, move: (s.move ?? D.move) * SCROLL, drift: s.drift ?? 0,
+}));
 {
   let t = 0;
   stops.forEach((s, i) => {

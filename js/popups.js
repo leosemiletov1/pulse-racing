@@ -11,6 +11,54 @@ const h = (tag, cls, html) => {
 const initials = (name) =>
   name.replace(/[^\p{L}\s]/gu, '').split(/\s+/).filter(Boolean).map((w) => w[0]).slice(0, 2).join('').toUpperCase() || '?';
 
+// Sponsor cards (logo, name, tier, description). Also used by sponsor.html.
+export function renderSponsors(sponsors) {
+  const list = h('div', 'sponsors');
+  sponsors.forEach((s) => {
+    const item = h(s.url ? 'a' : 'div', 'sponsor');
+    if (s.url) Object.assign(item, { href: s.url, target: '_blank', rel: 'noopener' });
+    const logo = h('div', 'sponsor__logo');
+    const wordmark = () => { logo.textContent = s.name; logo.classList.add('sponsor__logo--text'); };
+    if (s.logo) {
+      const img = new Image();
+      img.src = s.logo;
+      img.alt = `${s.name} logo`;
+      img.onerror = wordmark; // no file yet: show the name instead
+      logo.append(img);
+    } else wordmark();
+    const info = h('div', 'sponsor__info');
+    info.append(h('div', 'sponsor__name', s.name));
+    if (s.tier) info.append(h('div', 'sponsor__tier', s.tier));
+    if (s.description) info.append(h('p', 'sponsor__desc', s.description));
+    item.append(logo, info);
+    list.append(item);
+  });
+  return list;
+}
+
+// Sponsorship tiers. Collapsible (click to see benefits) unless `allOpen` is set.
+// A tier with `open: true` starts expanded. Also used by sponsor.html.
+export function renderTiers(tiers, { allOpen = false } = {}) {
+  const wrap = h('div', 'tiers');
+  tiers.forEach((t) => {
+    // allOpen: plain always-visible blocks; otherwise <details> that open on click
+    const tier = h(allOpen ? 'div' : 'details', `tier${t.highlight ? ' tier--highlight' : ''}`);
+    if (!allOpen) tier.open = !!t.open;
+    const head = h(allOpen ? 'div' : 'summary', 'tier__head');
+    head.append(h('span', 'tier__name', t.name), h('span', 'tier__price', t.price || ''));
+    tier.append(head);
+    if (t.qualifies) tier.append(h('p', 'tier__note', `<b>Qualifies with:</b> ${t.qualifies}`));
+    if (t.examples) tier.append(h('p', 'tier__note', `<b>Examples:</b> ${t.examples}`));
+    if (t.perks?.length) {
+      const ul = h('ul');
+      t.perks.forEach((perk) => ul.append(h('li', null, perk)));
+      tier.append(ul);
+    }
+    wrap.append(tier);
+  });
+  return wrap;
+}
+
 export function buildPopup(stop) {
   const p = stop.popup;
   const hero = p.style === 'hero';
@@ -74,50 +122,8 @@ export function buildPopup(stop) {
     card.append(grid);
   }
 
-  if (p.sponsors?.length) {
-    const list = h('div', 'sponsors');
-    p.sponsors.forEach((s) => {
-      const item = h(s.url ? 'a' : 'div', 'sponsor');
-      if (s.url) Object.assign(item, { href: s.url, target: '_blank', rel: 'noopener' });
-      const logo = h('div', 'sponsor__logo');
-      const wordmark = () => { logo.textContent = s.name; logo.classList.add('sponsor__logo--text'); };
-      if (s.logo) {
-        const img = new Image();
-        img.src = s.logo;
-        img.alt = `${s.name} logo`;
-        img.onerror = wordmark; // no file yet: show the name instead
-        logo.append(img);
-      } else wordmark();
-      const info = h('div', 'sponsor__info');
-      info.append(h('div', 'sponsor__name', s.name));
-      if (s.tier) info.append(h('div', 'sponsor__tier', s.tier));
-      if (s.description) info.append(h('p', 'sponsor__desc', s.description));
-      item.append(logo, info);
-      list.append(item);
-    });
-    card.append(list);
-  }
-
-  // Tiers are collapsible: click a tier to see its benefits. `open: true` starts it expanded.
-  if (p.tiers?.length) {
-    const tiers = h('div', 'tiers');
-    p.tiers.forEach((t) => {
-      const tier = h('details', `tier${t.highlight ? ' tier--highlight' : ''}`);
-      tier.open = !!t.open;
-      const head = h('summary', 'tier__head');
-      head.append(h('span', 'tier__name', t.name), h('span', 'tier__price', t.price || ''));
-      tier.append(head);
-      if (t.qualifies) tier.append(h('p', 'tier__note', `<b>Qualifies with:</b> ${t.qualifies}`));
-      if (t.examples) tier.append(h('p', 'tier__note', `<b>Examples:</b> ${t.examples}`));
-      if (t.perks?.length) {
-        const ul = h('ul');
-        t.perks.forEach((perk) => ul.append(h('li', null, perk)));
-        tier.append(ul);
-      }
-      tiers.append(tier);
-    });
-    card.append(tiers);
-  }
+  if (p.sponsors?.length) card.append(renderSponsors(p.sponsors));
+  if (p.tiers?.length) card.append(renderTiers(p.tiers));
 
   if (p.cta) {
     const a = h('a', 'cta', `${p.cta.label} <span aria-hidden="true">→</span>`);

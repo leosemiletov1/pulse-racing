@@ -16,7 +16,9 @@ This opens http://localhost:8080. Caching is off, so after you edit a file just 
 
 | I want to change… | Edit |
 |---|---|
-| Popup text, team members, sponsors, budget table, photos | `config/tour.js` |
+| Popup text, team members, budget table, photos | `config/tour.js` |
+| Sponsors/partners, sponsorship tiers, enquiry email, GoFundMe link | `config/sponsorship.js` (used by the tour and `sponsor.html`) |
+| Wording on the sponsor page | `sponsor.html` |
 | Camera angles, zoom, the order of stops, scroll speed | `config/tour.js` |
 | Paint colour, gloss, lights, reflections, floor glow | `config/render.js` |
 | Fonts, colours, card styling | `css/style.css` |

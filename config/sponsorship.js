@@ -9,7 +9,7 @@ export default {
   email: 'Zhang-C-25@kcs.org.uk',
 
   // Individual donations. Leave '' until the page exists; the button shows "coming soon".
-  gofundme: '',
+  gofundme: 'https://www.gofundme.com/f/stem-racing-competition-london-regionals',
 
   // Current partners. logo: file in assets/sponsors/ (the name is shown if the file is missing).
   sponsors: [
